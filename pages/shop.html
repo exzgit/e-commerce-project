@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="../source/styles/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="flex z-20 fixed items-end bg-[#E6E6E6] h-16 w-full justify-center px-16">
+        <nav class="flex items-end h-16 w-full justify-between border-b-2 border-gray-400">
+            <span class="text-gray-800 font-bold text-xl px-16">THE M.I.C</span>
+            <ul class="flex">
+                <li class="text-center w-16"><a href="#HOME" onclick="window.location.href='./index.html'">HOME</a></li>
+                <li class="text-center w-16"><a href="#ABOUT" onclick="window.location.href='./about.html'">ABOUT</a></li>
+                <li class="text-center w-16"><a href="#SHOP" onclick="window.location.href='./shop.html'" class="font-medium text-[#4C361A]">SHOP</a></li>
+                <li class="text-center w-20"><a href="#" onclick="window.location.href='./contact.html'">CONTACT</a></li>
+                <li class="text-center w-32"><a href="#" onclick="window.location.href='./login.html'">LOGIN/SIGNUP</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="bg-[#E6E6E6]">
+        <section id="SHOP">
+            <div class="py-20 px-20">
+                <div class="text-center px-32">
+                    <h1 class="text-3xl font-bold italic">ONLINE SHOP</h1>
+                    <p>Menghadirkan berbagai produk cetak 3D berkualitas tinggi yang dirancang untuk memenuhi kebutuhan industri dan komersial. Dari komponen presisi hingga model prototipe, setiap produk kami dibuat dengan teknologi terkini untuk memastikan akurasi dan ketahanan. Jelajai berbagai solusi cetak 3D kami yang inovatif dan dapat diandalkan untuk semua proyek Anda.</p>
+                </div>
+                <div class="bg-gray-400 py-[1px] my-4"></div>
+                <div class="relative">
+
+                    <button onclick="scrollLeft()" id="scrollLeftBtn" class="absolute left-0 top-1/2 w-12 h-12 transform -translate-y-1/2 text-2xl p-2 rounded-full z-10 shadow-md">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+
+                    <div id="product-container" class="relative flex mx-16 gap-4 p-4 overflow-x-auto rounded-md">
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+
+                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
+                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
+                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
+                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
+                      </div>
+                      
+                    </div>
+
+                    <button onclick="scrollRight()" id="scrollRightBtn" class="z-10 absolute right-0 top-1/2 w-12 h-12 transform -translate-y-1/2 text-2xl p-2 rounded-full z-10 shadow-md">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../source/scripts/index.js"></script>
+</body>
+</html>
