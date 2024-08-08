@@ -51,7 +51,6 @@ $conn->close();
                             <img src="../source/image/default.jpg" class="bg-gray-300 w-32 h-32 rounded-full border border-gray-400 object-cover">
                             <h1 class="text-gray-500 font-bold text-2xl mt-6 border-b">ADMINNAME</h1>
                         <?php endif; ?>
-                        <span class="text-gray-400 italic text-sm">12/08/2024</span>
                         <div class="w-full px-2">
                             <div class="bg-gray-300 p-[1px] w-full"></div>
                             <div class="w-full hidden border bg-gray-300 rounded-md p-2">
