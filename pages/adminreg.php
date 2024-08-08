@@ -7,28 +7,28 @@ $status_failed = '';
 $email_error = '';
 
 $conn->query("SET @id := 0");
-$conn->query("UPDATE usertb SET USERID = @id := (@id + 1)");
-$conn->query("ALTER TABLE usertb AUTO_INCREMENT = 1");
+$conn->query("UPDATE admindb SET ADMINID = @id := (@id + 1)");
+$conn->query("ALTER TABLE admindb AUTO_INCREMENT = 1");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $adminname = $_POST['adminname'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $userimg = null;
+    $adminimg = null;
     $fileType = '';
     if (isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['file']['tmp_name'];
         $fileType = $_FILES['file']['type'];
         
-        $userimg = file_get_contents($fileTmpPath);
+        $adminimg = file_get_contents($fileTmpPath);
     } else {
         $default_img_path = '../source/image/default.jpg';
         $fileType = mime_content_type($default_img_path);
-        $userimg = file_get_contents($default_img_path);
+        $adminimg = file_get_contents($default_img_path);
     }
 
-    $stmt = $conn->prepare("SELECT USERMAIL FROM usertb WHERE USERMAIL = ?");
+    $stmt = $conn->prepare("SELECT ADMINMAIL FROM admindb WHERE ADMINMAIL = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt->close();
 
-        $stmt = $conn->prepare("INSERT INTO usertb (USERNAME, USERMAIL, PASSWORD, USERIMG, IMGTYPE) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $username, $email, $password, $userimg, $fileType);
+        $stmt = $conn->prepare("INSERT INTO admindb (ADMINNAME, ADMINMAIL, PASSWORD, ADMINIMG, IMGTYPE) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $adminname, $email, $password, $adminimg, $fileType);
 
         if ($stmt->execute()) {
             $status_success = 'Registrasi berhasil!';
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </label>
                     <input type="file" id="file" name="file" class="hidden">
                     <div>
-                        <input type="text" id="username" name="username" placeholder="Username" class="mt-1 block w-full px-3 py-1 border-b border-gray-300 shadow-sm outline-none focus:border-[#DCBC92]" required>
+                        <input type="text" id="adminname" name="adminname" placeholder="admin name" class="mt-1 block w-full px-3 py-1 border-b border-gray-300 shadow-sm outline-none focus:border-[#DCBC92]" required>
                     </div>
                     <div>
                         <input type="email" id="email" name="email" placeholder="Email" class="mt-1 block w-full px-3 py-1 border-b border-gray-300 shadow-sm outline-none focus:border-[#DCBC92]" required>
