@@ -68,6 +68,22 @@ $conn->close();
                 <div class="w-full p-6">
                     <div class="w-full">
                         
+                        <h1 class="text-black font-bold text-xl">Kontak Pesanan dan Order</h1>
+                        <div class="w-full flex flex-wrap gap-2 items-start justify-start p-2">
+                            <a href="#" class="w-40 backdrop-blur-sm bg-cover bg-center bg-blur flex flex-col items-start justify-end h-40 bg-gray-300 border border-1 border-gray-400 rounded-xl">
+                                <h1 class="text-xl font-medium text-black px-1">Nama Produk</h1>
+                                <h1 class="text-sm font-sans text-black px-1">Sedang di proses</h1>
+                                <h1 class="text-md w-full font-bold text-white p-1 rounded-b-xl bg-blue-400">Rp100.000.00</h1>
+                            </a>
+                            <a href="#" class="w-40 backdrop-blur-sm bg-cover bg-center bg-blur flex flex-col items-start justify-end h-40 bg-gray-300 border border-1 border-gray-400 rounded-xl">
+                                <h1 class="text-xl font-medium text-black px-1">Nama Produk</h1>
+                                <h1 class="text-sm font-sans text-black px-1">Sedang menunggu</h1>
+                                <h1 class="text-md w-full font-bold text-white p-1 rounded-b-xl bg-blue-400">Menunggu Harga</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="w-full">
+                        
                         <h1 class="text-black font-bold text-xl">Pekerjaan Saya</h1>
                         <div class="flex justify-between bg-gray-200 w-full">
                             <p class="text-sm font-medium p-1">Lihat detail pekerjaan Anda</p>

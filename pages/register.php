@@ -1,10 +1,13 @@
 <?php
 session_start();
 include 'db.php';
+include '../AESKey.php';
 
 $status_success = '';
 $status_failed = '';
 $email_error = '';
+
+$cipher = 'AES-128-CBC';
 
 $conn->query("SET @id := 0");
 $conn->query("UPDATE usertb SET USERID = @id := (@id + 1)");
@@ -13,7 +16,10 @@ $conn->query("ALTER TABLE usertb AUTO_INCREMENT = 1");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+    $encrypted_password = openssl_encrypt($_POST['password'], $cipher, $key, 0, $iv);
+    $encrypted_password = base64_encode($encrypted_password . '::' . $iv);
 
     $userimg = null;
     $fileType = '';
@@ -40,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
 
         $stmt = $conn->prepare("INSERT INTO usertb (USERNAME, USERMAIL, PASSWORD, USERIMG, IMGTYPE) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $username, $email, $password, $userimg, $fileType);
+        $stmt->bind_param("sssss", $username, $email, $encrypted_password, $userimg, $fileType);
 
         if ($stmt->execute()) {
             $status_success = 'Registrasi berhasil!';
@@ -51,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $conn->close();
 }
+
 ?>
 
 <!DOCTYPE html>

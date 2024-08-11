@@ -1,3 +1,19 @@
+<?php
+include 'db.php';
+
+$query = "SELECT ID, PRODUCTNAME, PRICING, IMGPRODUCT FROM cart_produk";
+$result = $conn->query($query);
+
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+$conn->query("SET @id := 0");
+$conn->query("UPDATE cart_produk SET ID = @id := (@id + 1)");
+$conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,13 +69,22 @@
                     </button>
 
                     <div id="product-container" class="relative flex mx-16 gap-4 p-4 overflow-x-auto rounded-md">
-                      <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
-                        <img class="h-48 w-full object-cover rounded-lg" src="https://img.freepik.com/free-photo/delicious-ramen-with-chopsticks-arrangement_23-2150756213.jpg?uid=R117730523&ga=GA1.2.1739804183.1722268117&semt=ais_hybrid">
-                        <h1 class="text-xl sm:text-2xl font-semibold p-3">Nama produk</h1>
-                        <p class="text-sm sm:text-md md:text-lg font-medium px-3">Rp200.000.00</p>
-                        <button class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600">Add to cart</button>
-                      </div>
-                      
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <div class="shadow-md w-64 min-w-64 p-3 bg-white rounded-lg text-center">
+                            <!-- Tampilkan gambar produk -->
+                            <?php
+                            $imgData = base64_encode($row['IMGPRODUCT']);
+                            $imgSrc = "data:image/jpeg;base64,{$imgData}";
+                            ?>
+                            <img src="<?php echo $imgSrc; ?>" alt="<?php echo htmlspecialchars($row['PRODUCTNAME']); ?>" class="h-48 w-full object-cover rounded-lg">
+                            <!-- Tampilkan nama produk -->
+                            <h1 class="text-xl sm:text-2xl font-semibold p-3"><?php echo htmlspecialchars($row['PRODUCTNAME']); ?></h1>
+                            <!-- Tampilkan harga produk -->
+                            <p class="text-sm sm:text-md md:text-lg font-medium px-3"><?php echo 'Rp' . number_format($row['PRICING'], 2, ',', '.'); ?></p>
+                            <!-- Tombol tambah ke keranjang -->
+                            <button type="button" class="bg-gray-500 font-medium p-2 text-gray-100 rounded w-full mt-3 hover:bg-gray-600 add-to-cart" data-id="<?php echo $row['ID']; ?>" data-price="<?php echo $row['PRICING']; ?>" data-name="<?php echo htmlspecialchars($row['PRODUCTNAME']); ?>" data-img="<?php echo $imgSrc; ?>">Add to cart</button>
+                        </div>
+                    <?php endwhile; ?>
                     </div>
 
                     <button onclick="scrollRight()" id="scrollRightBtn" class="z-10 absolute right-0 top-1/2 w-12 h-12 transform -translate-y-1/2 text-2xl p-2 rounded-full z-10 shadow-md">
@@ -141,7 +166,9 @@
 
                         <input type="text" id="subject" name="subject" placeholder="Subject" class="mb-2 block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required>
                         <textarea type="textarea" id="message" name="message" placeholder="Message" class="mb-2 min-h-[150px] block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required></textarea>
-                        
+                        <div class="flex justify-end">
+                            <button type="submit" class="rounded-full py-2 px-4 bg-[#503321] text-white font-medium text-xl">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -159,6 +186,38 @@
         }
     </script>
 
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const productPrice = this.getAttribute('data-price');
+                const productImg = this.getAttribute('data-img');
+                const productName = this.getAttribute('data-name');
+                
+                fetch('./add_to_cart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        'product_id': productId,
+                        'product_price': productPrice,
+                        'product_img': productImg,
+                        'product_name': productName,
+                    })
+                })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result);
+                });
+            });
+        });
+    </script>
+
+
     <script src="../source/scripts/index.js"></script>
 </body>
 </html>
+
+$conn->close();
+?>

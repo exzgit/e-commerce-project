@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </form>
 
-                <p class="mt-4 text-center text-gray-600">Sudah punya akun? <a href="login.php" class="text-[#DCBC92] hover:underline">Login di sini</a></p>
+                <p class="mt-4 text-center text-gray-600">Sudah punya akun? <a href="./loginadmin.php" class="text-[#DCBC92] hover:underline">Login di sini</a></p>
             </div>
         </div>
     </main>

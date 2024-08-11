@@ -32,3 +32,36 @@ document.getElementById('togglePassword').addEventListener('click', function () 
         icon.classList.add('fa-eye');
     }
 });
+
+
+
+
+document.getElementById('toggleNewPassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('newPassword');
+    const icon = this;
+    
+    if (passwordField.type === 'newPassword') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'newPassword';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+
+document.getElementById('toggleOldPassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('oldPassword');
+    const icon = this;
+    
+    if (passwordField.type === 'oldPassword') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'oldPassword';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});

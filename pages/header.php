@@ -5,7 +5,7 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : null;
 ?>
 
 
-<header class="flex z-20 fixed items-end bg-[#E6E6E6] h-16 w-full justify-center px-16">
+<div class="flex z-20 fixed items-end bg-[#E6E6E6] h-16 w-full justify-center px-16">
     <nav class="flex items-end h-16 w-full justify-between border-b-2 border-gray-400">
         <span class="text-gray-800 m-2 p-2 font-bold text-xl px-16">THE M.I.C</span>
         <ul class="flex">
@@ -29,4 +29,4 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : null;
             <?php endif; ?>
         </ul>
     </nav>
-</header>
+</div>

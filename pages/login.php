@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
 session_start();
+include '../AESKey.php'; 
 
 $error_status = '';
 
@@ -8,18 +9,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Query untuk mengambil USERID dan PASSWORD
     $stmt = $conn->prepare("SELECT USERID, PASSWORD FROM usertb WHERE USERMAIL = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userId, $hashedPassword);
+        $stmt->bind_result($userId, $encrypted_password);
         $stmt->fetch();
 
-        if (password_verify($password, $hashedPassword)) {
-            // Simpan USERID dan tipe pengguna ke session
+        list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_password), 2);
+
+        $decrypted_password = openssl_decrypt($encrypted_data, 'AES-128-CBC', $key, 0, $iv);
+
+        if ($decrypted_password === $password) {
             $_SESSION['user_id'] = $userId;
             $_SESSION['user_type'] = 'user';
             $_SESSION['user'] = $email;
