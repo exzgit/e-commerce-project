@@ -21,12 +21,13 @@ if ($is_logged_in) {
     $stmt->fetch();
     $stmt->close();
     
-    // Ambil data pesanan
-    $sql = "SELECT * FROM cart_user WHERE IDPEMESAN = ?";
+    // Ambil data dari cart user
+    $sql = "SELECT * FROM cart_users WHERE IDPEMESAN = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+
 }
 $conn->close();
 ?>
@@ -43,8 +44,8 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <main>
-        <div class="w-full h-screen bg-gray-100">
+    <main class="overflow-y-hidden">
+        <div class="w-full h-screen overflow-y-scroll bg-gray-100">
             <div class="w-full h-64 bg-[url(https://img.freepik.com/free-photo/grey-geometrical-shapes-background_23-2148811539.jpg?uid=R117730523&ga=GA1.1.1739804183.1722268117&semt=sph)]  bg-cover bg-center flex items-center"></div>
             <div class="w-full flex space-x-12">
                 
@@ -81,20 +82,25 @@ $conn->close();
 
                 <div class="w-full p-6">
                     <div class="w-full">
-                        <h1 class="text-black font-bold text-xl">Pesanan Saya</h1>
+                        <h1 class="text-black font-bold text-xl">Keranjang Saya</h1>
                         <div class="flex justify-between bg-gray-200 w-full">
                             <p class="text-sm font-medium p-1">Lihat detail pesanan Anda</p>
                             <a href="./index.php#CONTACT" class="text-blue-100 bg-blue-500 text-sm font-medium p-1">Pesan sekarang</a>
                         </div>
-                        <div id="pemesanan" class="w-full flex flex-wrap gap-2 items-start justify-start p-2">
+                        <div id="pemesanan" class="w-full h-92 flex flex-wrap overflow-y-auto gap-2 items-start justify-start p-2">
                         <?php if ($result->num_rows > 0): ?>
                             <?php while ($row = $result->fetch_assoc()): ?>
-                                <a href="#" class="relative w-48 flex flex-col items-start justify-end h-52 overflow-hidden bg-white border border-1 border-gray-400 rounded-xl">
-                                    <img src="<?php echo htmlspecialchars($row['IMGPRODUCT']); ?>" alt="<?php echo htmlspecialchars($row['PRODUCTORDER']); ?>" class="h-full w-full object-cover border-b rounded-t-md">
-                                    <h1 class="text-xl font-medium text-black px-1"><?= htmlspecialchars($row['PRODUCTORDER']); ?></h1>
-                                    <h1 class="text-sm font-sans text-black px-1 bg-gray-200 m-1 rounded-md"><?= htmlspecialchars($row['STATUS']); ?></h1>
-                                    <h1 class="text-md w-full font-bold text-orange-600 p-1 rounded-b-xl"><?= 'Rp' . number_format($row['TOTALPRICING'], 2, ',', '.'); ?></h1>
-                                </a>
+                                <button onclick="location.href='nextcart.php?idproduct=<?php echo urlencode($row['IDPRODUCT']); ?>'" class="relative hover:shadow-md w-48 flex flex-col justify-end items-start h-48 overflow-hidden bg-white border border-1 border-gray-400 rounded-xl">
+                                    <?php if ($row['IMGPRODUCT']): ?>    
+                                        <img src="<?php echo htmlspecialchars($row['IMGPRODUCT']); ?>" alt="<?php echo htmlspecialchars($row['PRODUCTORDER']); ?>" class="h-full w-full object-cover border-b">
+                                    <?php else: ?>
+                                        <img src="../source/image/productimg.jpg" alt="<?php echo htmlspecialchars($row['PRODUCTORDER']); ?>" class="h-full w-full object-cover border-b">
+                                    <?php endif; ?>
+                                    <h1 class="text-xl text-left font-medium text-black px-1"><?= htmlspecialchars($row['PRODUCTORDER']); ?></h1>
+                                    <h1 class="text-xl text-left font-medium text-black px-1"><?= htmlspecialchars($row['SUBJECT']); ?></h1>
+                                    <h1 class="text-sm text-left font-sans text-black px-1 bg-gray-200 m-1 rounded-md"><?= htmlspecialchars($row['STATUS']); ?></h1>
+                                    <h1 class="text-md text-left w-full font-bold text-orange-600 p-1 rounded-b-xl"><?= 'Rp' . number_format($row['TOTALPRICING'], 2, ',', '.'); ?></h1>
+                                </button>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <p></p>

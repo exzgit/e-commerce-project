@@ -36,9 +36,9 @@ $conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
                     <span class="text-justify font-sans">Selamat datang di MIC, pemimpin dalam inovasi dan teknologi cetak 3D di Indonesia. Kami berdedikasi untuk menghadirkan solusi cetak 3D berkualitas tinggi yang dapat mengubah ide-ide kreative Anda menjadi kenyataan. Dengan menggunakan teknologi terbaru dan bahan berkualitas premium, kami menawarkan layanan cetak 3D yang cepat, presisi, dan terjangkau untuk berbagai kebutuhan, mulai dari prototipe produk, komponen industri, hingga karya seni dan desain.</span>
                     <button type="button" onclick="window.location.href='#SHOP';" class="bg-[#503321] tracking-wide py-1 px-8 rounded-full text-white font-bold text-xl ">SHOP NOW</button>
                 </div>
-                <img src="https://img.freepik.com/free-photo/manager-secretary-discussing-working-thumb-up-white-background_554837-713.jpg?t=st=1722355397~exp=1722358997~hmac=bf09682339ddf5803d6238acc028f57981f66b091ef01b3aed5110e14c62ea5d&w=826" class="card bg-gray-400 object-cover rounded-md w-[200px] h-[200px]">
-                <img src="https://img.freepik.com/free-photo/millennial-group-young-businesspeople-asia-businessman-businesswoman-celebrate-giving-five-after-dealing-feeling-happy-signing-contract-agreement-meeting-room-small-modern-office_7861-2493.jpg?uid=R117730523&ga=GA1.1.1739804183.1722268117&semt=ais_hybrid" class="card bg-gray-400 object-cover rounded-md w-[200px] h-[200px]">
-                <img src="https://img.freepik.com/free-photo/asian-businessmen-businesswomen-meeting-brainstorming-ideas-about-creative-web-design-planning-application-developing-template-layout-mobile-phone-project-working-together-small-office_7861-2558.jpg?uid=R117730523&ga=GA1.1.1739804183.1722268117&semt=ais_hybrid" class="card bg-gray-400 object-cover rounded-md w-[200px] h-[200px]">
+                <img src="https://img.freepik.com/free-photo/manager-secretary-discussing-working-thumb-up-white-background_554837-713.jpg?t=st=1722355397~exp=1722358997~hmac=bf09682339ddf5803d6238acc028f57981f66b091ef01b3aed5110e14c62ea5d&w=826" class="card bg-gray-400 object-cover rounded-md w-[180px] h-[180px]">
+                <img src="https://img.freepik.com/free-photo/millennial-group-young-businesspeople-asia-businessman-businesswoman-celebrate-giving-five-after-dealing-feeling-happy-signing-contract-agreement-meeting-room-small-modern-office_7861-2493.jpg?uid=R117730523&ga=GA1.1.1739804183.1722268117&semt=ais_hybrid" class="card bg-gray-400 object-cover rounded-md w-[180px] h-[180px]">
+                <img src="https://img.freepik.com/free-photo/asian-businessmen-businesswomen-meeting-brainstorming-ideas-about-creative-web-design-planning-application-developing-template-layout-mobile-phone-project-working-together-small-office_7861-2558.jpg?uid=R117730523&ga=GA1.1.1739804183.1722268117&semt=ais_hybrid" class="card bg-gray-400 object-cover rounded-md w-[180px] h-[180px]">
             </div>
         </section>
 
@@ -110,32 +110,37 @@ $conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
                 </div>
                 <div class="w-[50%] px-6 ">
                     <h3 class="font-medium text-md text-center mb-6">PEMESANAN & KUSTOMISASI 3D PRINT</h3>
-                    <form method="POST" action="">
+                    <form method="POST" action="order.php"  enctype="multipart/form-data">
                         <input type="text" id="username" name="username" placeholder="Name" class="mb-2 block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required>
                         <input type="email" id="email" name="email" placeholder="E-Mail" class="mb-2 block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required>
                         
                         <div class="flex space-x-2  cursor-pointer">
                             <div class="flex items-center w-full">
-                                <label for="file" class="block w-full px-3 py-2 bg-[#D4C3A9] text-gray-600 font-medium cursor-pointer hover:bg-[#c0ae94] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c0ae94] transition-colors duration-200 ease-in-out">
+                                <label for="file" id="fileLabel" class="block w-64 max-w-64 px-3 py-2 bg-[#D4C3A9] text-gray-600 overflow-hidden font-medium cursor-pointer hover:bg-[#c0ae94] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c0ae94] transition-colors duration-200 ease-in-out">
                                     Upload File
                                 </label>
-                                <input type="file" id="file" name="file" class="hidden" required>
+                                <input type="file" accept=".rar, .zip" multiple id="file" name="file[]" class="hidden" required>
                             </div>
 
-                            <div class="relative inline-block text-left">
-                                <button onclick="toggleDropdown('bahan3DP')" class="inline-flex justify-center w-48 px-4 py-2 bg-[#D4C3A9] font-medium text-gray-600 outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                            <div class="relative inline-block text-left w-full">
+                                <!-- Hidden input to hold the selected value -->
+                                <input type="hidden" id="bahan3DPValue" name="bahanprint">
+
+                                <!-- Label dropdown -->
+                                <label onclick="toggleDropdown('bahan3DP')" id="selectedBahan3DP" class="inline-flex justify-center w-full h-10 px-4 py-2 bg-[#D4C3A9] font-medium text-gray-600 outline-none text-wrap overflow-hidden" aria-expanded="true" aria-haspopup="true">
                                     Bahan 3D Print
                                     <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
-                                </button>
-                    
+                                </label>
+
+                                <!-- Dropdown menu -->
                                 <div id="bahan3DP" class="hidden z-20 origin-top-right absolute right-0 mt-2 w-64 rounded-md outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                     <ul class="bg-white border border-[#D4C3A9] rounded-md cursor-pointer" role="none">
-                                        <li onclick="toggleDropdown('bahan3DP')"  class="text-gray-800 block rounded-t-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-0">Polylactic Acid (PLA)</a>
-                                        <li onclick="toggleDropdown('bahan3DP')"  class="text-gray-800 block font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-1">Acrylonitrile Butadiene Styrene (Abs)</a>
-                                        <li onclick="toggleDropdown('bahan3DP')"  class="text-gray-800 block rounded-b-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-2">Plastic Polyvinyl Alcohol (PVA)</a>
-                                    </li>
+                                        <li onclick="selectBahan('Polylactic Acid (PLA)')" class="text-gray-800 block rounded-t-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1">Polylactic Acid (PLA)</li>
+                                        <li onclick="selectBahan('Acrylonitrile Butadiene Styrene (ABS)')" class="text-gray-800 block font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1">Acrylonitrile Butadiene Styrene (ABS)</li>
+                                        <li onclick="selectBahan('Plastic Polyvinyl Alcohol (PVA)')" class="text-gray-800 block rounded-b-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1">Plastic Polyvinyl Alcohol (PVA)</li>
+                                    </ul>
                                 </div>
                             </div>
                     
@@ -148,22 +153,12 @@ $conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
                         </div>
 
                         <div class="relative w-full inline-block text-left mb-2">
-                            <button onclick="toggleDropdown('metode-pengiriman')" class="inline-flex w-full justify-center w-48 px-4 py-2 bg-[#D4C3A9] font-medium text-gray-600 outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                Metode Pengiriman
-                                <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                
-                            <div id="metode-pengiriman" class="hidden z-10 origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                <ul class="bg-white border border-[#D4C3A9] rounded-md cursor-pointer" role="none">
-                                    <li onclick="toggleDropdown('metode-pengiriman')"  class="text-gray-800 block rounded-t-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-0">JNE</a>
-                                    <li onclick="toggleDropdown('metode-pengiriman')"  class="text-gray-800 block font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-1">Acrylonitrile Butadiene Styrene (Abs)</a>
-                                    <li onclick="toggleDropdown('metode-pengiriman')"  class="text-gray-800 block rounded-b-md font-medium px-4 py-2 text-sm hover:bg-[#9E8561] hover:text-white" role="menuitem" tabindex="-1" id="menu-item-2">Plastic Polyvinyl Alcohol (PVA)</a>
-                                </li>
-                            </div>
+                            <label class="inline-flex w-full justify-center w-full px-4 py-2 bg-[#D4C3A9] font-medium text-gray-600 outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                Metode Pengiriman JNE Express
+                            </label>
                         </div>
 
+                        <input type="text" id="alamat" name="alamat" placeholder="Alamat" class="mb-2 block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required>
                         <input type="text" id="subject" name="subject" placeholder="Subject" class="mb-2 block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required>
                         <textarea type="textarea" id="message" name="message" placeholder="Message" class="mb-2 min-h-[150px] block w-full px-3 py-2 bg-[#D4C3A9] placeholder-gray-600 font-medium outline-none " required></textarea>
                         <div class="flex justify-end">
@@ -178,12 +173,48 @@ $conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
 
     </main>
 
-    
-
+    <!-- JavaScript -->
     <script>
         function toggleDropdown(id) {
             document.getElementById(id).classList.toggle('hidden');
         }
+    </script>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+        }
+
+        function selectBahan(bahan) {
+
+            // Set the value of hidden input
+            document.getElementById('bahan3DPValue').value = bahan;
+
+            // Hide dropdown
+            toggleDropdown('bahan3DP');
+        }
+    </script>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('file').addEventListener('change', function() {
+            var fileInput = document.getElementById('file');
+            var fileLabel = document.getElementById('fileLabel');
+            var files = fileInput.files;
+            var fileNames = [];
+
+            for (var i = 0; i < files.length; i++) {
+                fileNames.push(files[i].name);
+            }
+
+            if (fileNames.length > 0) {
+                fileLabel.innerText = fileNames.join(', ');
+            } else {
+                fileLabel.innerText = 'Upload File';
+            }
+        });
     </script>
 
     <script>
@@ -218,6 +249,3 @@ $conn->query("ALTER TABLE cart_produk AUTO_INCREMENT = 1");
     <script src="../source/scripts/index.js"></script>
 </body>
 </html>
-
-$conn->close();
-?>

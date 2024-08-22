@@ -65,3 +65,21 @@ document.getElementById('toggleOldPassword').addEventListener('click', function 
         icon.classList.add('fa-eye');
     }
 });
+
+
+function toggleDiv(divId) {
+    const divs = ['harga', 'deskripsi', 'pekerjaan', 'terkirim'];
+
+    divs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            if (id === divId) {
+                element.classList.remove('hidden');
+                element.classList.add('flex');
+            } else {
+                element.classList.remove('flex');
+                element.classList.add('hidden');
+            }
+        }
+    });
+}
