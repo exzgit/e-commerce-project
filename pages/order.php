@@ -8,6 +8,17 @@ if (!$is_logged_in) {
     exit;
 }
 
+$mimeTypes = [
+    'jpg' => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'png' => 'image/png',
+    'stl' => 'application/vnd.ms-pki.stl',
+    'fbx' => 'image/vnd.fbx',
+    'obj' => 'application/x-tgif',
+    'zip' => 'application/x-zip-compressed',
+    'rar' => 'application/x-rar-compressed'
+];
+
 // Ambil user ID dari session
 $idpemesan = $_SESSION['user_id'];
 
@@ -28,10 +39,14 @@ $pengiriman = 'JNE Express';
 $status = 'Menunggu balasan';
 
 $fileData = [];
+$fileTypes = [];
 if (isset($_FILES['file']) && $_FILES['file']['error'][0] === UPLOAD_ERR_OK) {
     foreach ($_FILES['file']['tmp_name'] as $key => $tmp_name) {
         if (is_uploaded_file($tmp_name)) {
             $fileData[] = file_get_contents($tmp_name); 
+            $fileType = $_FILES['file']['type'][$key];
+            $fileExt = strtolower(pathinfo($_FILES['file']['name'][$key], PATHINFO_EXTENSION));
+            $fileTypes[] = isset($mimeTypes[$fileExt]) ? $mimeTypes[$fileExt] : 'application/octet-stream'; // Tentukan MIME type yang sesuai
         }
     }
 } else {
@@ -41,15 +56,17 @@ if (isset($_FILES['file']) && $_FILES['file']['error'][0] === UPLOAD_ERR_OK) {
 
 if (!empty($fileData)) {
     $file3D = implode(",", array_map('base64_encode', $fileData));
+    $fileTypesStr = implode(",", $fileTypes);
 
-    $stmt = $conn->prepare("INSERT INTO cart_users (USERNAME, USERMAIL, IDPEMESAN, SUBJECT, USERMESSAGE, FILE, BAHANPRINT, PANJANG, LEBAR, TINGGI, ALAMAT, METHODPENGIRIMAN, STATUS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // Memperbaiki pernyataan SQL INSERT INTO
+    $stmt = $conn->prepare("INSERT INTO cart_users (USERNAME, USERMAIL, IDPEMESAN, SUBJECT, USERMESSAGE, FILE, FILETYPE, BAHANPRINT, PANJANG, LEBAR, TINGGI, ALAMAT, METHODPENGIRIMAN, STATUS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     if ($stmt === false) {
         echo "Error preparing statement: " . $conn->error;
         exit;
     }
 
-    // Masukkan ID pengguna ke dalam parameter statement
-    $stmt->bind_param("ssissssiiisss", $username, $email, $idpemesan, $subject, $message, $file3D, $bahanprint, $panjang, $lebar, $tinggi, $alamat, $pengiriman, $status);
+    // Bind parameters dengan tipe data yang sesuai
+    $stmt->bind_param("ssissssssiiiss", $username, $email, $idpemesan, $subject, $message, $file3D, $fileTypesStr, $bahanprint, $panjang, $lebar, $tinggi, $alamat, $pengiriman, $status);
 
     if ($stmt->execute()) {
         header("Location: ./profile.php");

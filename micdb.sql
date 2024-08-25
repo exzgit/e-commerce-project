@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2024 at 05:30 AM
+-- Generation Time: Aug 25, 2024 at 09:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -64,18 +64,25 @@ CREATE TABLE `cart_users` (
   `METHODPENGIRIMAN` varchar(256) NOT NULL,
   `STATUS` varchar(256) NOT NULL,
   `PRODUCTORDER` varchar(256) NOT NULL,
-  `IMGPRODUCT` longblob DEFAULT NULL,
+  `IMGPRODUCT` longtext DEFAULT NULL,
   `IDPEMESAN` int(11) NOT NULL,
   `IDPESANAN` int(11) NOT NULL,
   `SUBJECT` tinytext NOT NULL,
   `ADMINMESSAGE` longtext NOT NULL,
   `USERMESSAGE` longtext NOT NULL,
+  `ADMINSUBJECT` tinytext NOT NULL,
+  `ADMINJOBDESK` mediumtext NOT NULL,
   `BAHANPRINT` text NOT NULL,
   `ALAMAT` mediumtext NOT NULL,
   `PANJANG` int(11) NOT NULL,
   `LEBAR` int(11) NOT NULL,
   `TINGGI` int(11) NOT NULL,
-  `FILE` longblob DEFAULT NULL
+  `FILE` longblob DEFAULT NULL,
+  `REVISION` int(11) DEFAULT NULL,
+  `PRODUCTS` varchar(256) NOT NULL,
+  `STARTDATE` date DEFAULT NULL,
+  `ENDDATE` date DEFAULT NULL,
+  `FILETYPE` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -130,7 +137,7 @@ ALTER TABLE `usertb`
 -- AUTO_INCREMENT for table `admindb`
 --
 ALTER TABLE `admindb`
-  MODIFY `ADMINID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ADMINID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cart_produk`
@@ -142,13 +149,13 @@ ALTER TABLE `cart_produk`
 -- AUTO_INCREMENT for table `cart_users`
 --
 ALTER TABLE `cart_users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `usertb`
 --
 ALTER TABLE `usertb`
-  MODIFY `USERID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `USERID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

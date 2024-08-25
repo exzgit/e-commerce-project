@@ -12,17 +12,17 @@ $username = '';
 $usermail = '';
 $statuspesanan = '';
 
-$product_id = $_POST['product_id'];  // ID produk yang di-post
+$product_id = $_POST['product_id'];
 $product_price = $_POST['product_price'];
 $product_img = $_POST['product_img'];
 $product_name = $_POST['product_name'];
 $methodPengiriman = 'JNE Express';
-$statuspesanan = 'Menunggu balasan';
+$statuspesanan = 'Menunggu Balasan';
+$productroles = "Belum di konfirmasi";
 
 if ($is_logged_in) {
     $user_id = $_SESSION['user_id'];
     
-    // Ambil data user
     $sql = "SELECT USERNAME, USERMAIL FROM usertb WHERE USERID = ?";
     $stmt = $conn->prepare($sql);
     
@@ -40,7 +40,6 @@ if ($is_logged_in) {
     
     $stmt->close();
     
-    // Cek apakah produk sudah ada di keranjang untuk user ini
     $sql = "SELECT ID FROM cart_users WHERE IDPRODUCT = ? AND IDPEMESAN = ?";
     $stmt = $conn->prepare($sql);
     
@@ -53,20 +52,18 @@ if ($is_logged_in) {
     $stmt->store_result();
     
     if ($stmt->num_rows > 0) {
-        // Jika produk sudah ada di keranjang
         echo "Produk sudah ada di dalam keranjang.";
     } else {
-        // Jika produk belum ada di keranjang, tambahkan produk
         $stmt->close();
 
-        $sql = "INSERT INTO cart_users (IDPRODUCT, USERNAME, USERMAIL, TOTALPRICING, METHODPENGIRIMAN, STATUS, SUBJECT, IMGPRODUCT, IDPEMESAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO cart_users (IDPRODUCT, USERNAME, USERMAIL, TOTALPRICING, METHODPENGIRIMAN, STATUS, SUBJECT, IMGPRODUCT, IDPEMESAN, PRODUCTS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         
         if ($stmt === false) {
             die("Prepare failed: " . $conn->error);
         }
         
-        $stmt->bind_param("ississssi", $product_id, $username, $usermail, $product_price, $methodPengiriman, $statuspesanan, $product_name, $product_img, $user_id);
+        $stmt->bind_param("ississssis", $product_id, $username, $usermail, $product_price, $methodPengiriman, $statuspesanan, $product_name, $product_img, $user_id, $productroles);
         
         if ($stmt->execute()) {
             echo "Produk berhasil ditambahkan ke dalam keranjang.";
